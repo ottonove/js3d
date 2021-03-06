@@ -13,18 +13,14 @@ const animate = () => {
   ctx.fillStyle='#000';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  A += 0.007;
+  A += 0.05;
 
-  const x = 50;
-  let sA = Math.sin(A) * x + width;
-  let cA = Math.cos(A) * x + height;
-  ctx.fillStyle = 'rgba(255,255,255,1)';
-  ctx.fillRect(sA, cA, 5, 5);
-
-  //ctx.arc(sA, cA, 20, 0, 180);
+  const x = 80; // 振幅
+  
   //円
+  ctx.fillStyle = 'rgba(255,255,255)';
   ctx.beginPath();
-  ctx.arc(ctx.canvas.width/2, ctx.canvas.height/2, 40, 0, Math.PI*2, false);
+  ctx.arc(width, Math.sin(A)*x+height, Math.abs(Math.tan(A))*20, 0, Math.PI*2, false);
   ctx.fill();
 
   console.log('animate');
