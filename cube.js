@@ -51,7 +51,7 @@ const project = (M) => {
 };
 
 const render = (objects, ctx, dx, dy) => {
-	console.log("render start");
+	console.log("render");
 
   // Clear the previous frame
 	ctx.clearRect(0, 0, 2*dx, 2*dy);
@@ -82,23 +82,42 @@ const render = (objects, ctx, dx, dy) => {
 	}
 };
 
-const animate = () => {
-  console.log('animate');
-  window.requestAnimationFrame(animate);
-};
-
 const init = () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+	ctx.fillStyle = 'rgba(0, 150, 255, 0.3)';
 
   const dx = canvas.width / 2;
   const dy = canvas.height / 2;
 
-  const cube_center = new Vertex(0, 11*dy/10, 0);
+  const cube_center = new Vertex(0, /* 11*dy/10 */0, 0);
   const cube = new Cube(cube_center, dy);
   const objects = [cube];
 
-  render(objects, ctx, dx, dy);
+  const rotate = (M, center, theta, phi) => {
+    // Rotation matrix coefficients
+    var ct = Math.cos(theta);
+    var st = Math.sin(theta);
+    var cp = Math.cos(phi);
+    var sp = Math.sin(phi);
+
+    // Rotation
+    var x = M.x - center.x;
+    var y = M.y - center.y;
+    var z = M.z - center.z;
+
+    M.x = ct * x - st * cp * y + st * sp * z + center.x;
+    M.y = st * x + ct * cp * y - ct * sp * z + center.y;
+    M.z = sp * y + cp * z + center.z;
+  }
+  const animate = () => {
+    for (var i = 0; i < 8; ++i) {
+        rotate(cube.vertices[i], cube_center, -Math.PI / 720, Math.PI / 720);
+    }
+    render(objects, ctx, dx, dy);
+    window.requestAnimationFrame(animate);
+  };
   animate();
 };
 
