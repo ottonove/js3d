@@ -1,7 +1,7 @@
 // (function() {
 //     var _onload = function() {
 //     var pretag = document.getElementById('d');
-     var canvastag = document.getElementById('canvasdonut');
+     var canvastag = document.getElementById('canvas');
 
 //     var tmr1 = undefined, tmr2 = undefined;
     var A=1, B=1;

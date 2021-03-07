@@ -1,4 +1,4 @@
-var canvastag = document.getElementById('canvasdonut');
+var canvastag = document.getElementById('canvas');
 
 var A=1, B=1;
 
