@@ -48,10 +48,12 @@ class Cube {
 
 const project = (M) => {
   return new Vertex2D(M.x, M.y);
-}
+};
 
-const render = (objects, ctx, dx, dy) {
-	// Clear the previous frame
+const render = (objects, ctx, dx, dy) => {
+	console.log("render start");
+
+  // Clear the previous frame
 	ctx.clearRect(0, 0, 2*dx, 2*dy);
 
 	// For each object
@@ -78,4 +80,26 @@ const render = (objects, ctx, dx, dy) {
 			ctx.fill();
 		}
 	}
-}
+};
+
+const animate = () => {
+  console.log('animate');
+  window.requestAnimationFrame(animate);
+};
+
+const init = () => {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const dx = canvas.width / 2;
+  const dy = canvas.height / 2;
+
+  const cube_center = new Vertex(0, 11*dy/10, 0);
+  const cube = new Cube(cube_center, dy);
+  const objects = [cube];
+
+  render(objects, ctx, dx, dy);
+  animate();
+};
+
+init();
