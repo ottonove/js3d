@@ -57,20 +57,20 @@ const render = (objects, ctx, dx, dy) => {
 	ctx.clearRect(0, 0, 2*dx, 2*dy);
 
 	// For each object
-	for (var i = 0, n_obj = objects.length; i < n_obj; ++i) {
+	for (let i = 0, n_obj = objects.length; i < n_obj; ++i) {
 		// For each face
-		for (var j = 0, n_faces = objects[i].faces.length; j < n_faces; ++j) {
+		for (let j = 0, n_faces = objects[i].faces.length; j < n_faces; ++j) {
 			// Current face
-			var face = objects[i].faces[j];
+			const face = objects[i].faces[j];
 
 			// Draw the first vertex
-			var P = project(face[0]);
+			let P = project(face[0]);
 			ctx.beginPath();
 			ctx.moveTo(P.x + dx, -P.y + dy);
 
 			// Draw the other vertices
-			for (var k = 1, n_vertices = face.length; k < n_vertices; ++k) {
-				P = project(face[k]);
+			for (let k = 1, n_vertices = face.length; k < n_vertices; ++k) {
+				P = project(face[k]); // 上の「let P」を「const」にして、ここも「const」にしても動作する。
 				ctx.lineTo(P.x + dx, -P.y + dy);
 			}
 
