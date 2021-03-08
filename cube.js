@@ -97,22 +97,22 @@ const init = () => {
 
   const rotate = (M, center, theta, phi) => {
     // Rotation matrix coefficients
-    var ct = Math.cos(theta);
-    var st = Math.sin(theta);
-    var cp = Math.cos(phi);
-    var sp = Math.sin(phi);
+    const ct = Math.cos(theta);
+    const st = Math.sin(theta);
+    const cp = Math.cos(phi);
+    const sp = Math.sin(phi);
 
     // Rotation
-    var x = M.x - center.x;
-    var y = M.y - center.y;
-    var z = M.z - center.z;
+    const x = M.x - center.x;
+    const y = M.y - center.y;
+    const z = M.z - center.z;
 
     M.x = ct * x - st * cp * y + st * sp * z + center.x;
     M.y = st * x + ct * cp * y - ct * sp * z + center.y;
     M.z = sp * y + cp * z + center.z;
   }
   const animate = () => {
-    for (var i = 0; i < 8; ++i) {
+    for (let i = 0; i < 8; ++i) {
         rotate(cube.vertices[i], cube_center, -Math.PI / 720, Math.PI / 720);
     }
     render(objects, ctx, dx, dy);
