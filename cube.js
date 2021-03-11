@@ -92,7 +92,8 @@ const init = () => {
   const dy = canvas.height / 2;
 
   const cube_center = new Vertex(0, /* 11*dy/10 */0, 0);
-  const cube = new Cube(cube_center, dy);
+  const cube_size = dx; // dxを指定している意味は無い。どんなサイズでも良い。
+  const cube = new Cube(cube_center, cube_size);
   const objects = [cube];
 
   const rotate = (M, center, theta, phi) => {
