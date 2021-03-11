@@ -67,6 +67,7 @@ const render = (objects, ctx, dx, dy) => {
 			let P = project(face[0]);
 			ctx.beginPath();
 			ctx.moveTo(P.x + dx, -P.y + dy);
+      // ctx.moveTo(P.x + dx, P.y + dy); // マイナス符号を取ると、面白い動きになる。
 
 			// Draw the other vertices
 			for (let k = 1, n_vertices = face.length; k < n_vertices; ++k) {
