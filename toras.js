@@ -89,8 +89,8 @@ const animate = () => {
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   //if(tmr1 === undefined) { // only update A and B if the first animation isn't doing it already
-  A += 0.07;
-  B += 0.03;
+//   A += 0.07;
+//   B += 0.03;
   //}
   // precompute cosines and sines of A, B, theta, phi, same as before
   var cA=Math.cos(A), sA=Math.sin(A),

@@ -112,6 +112,9 @@ const init = () => {
     M.x = ct * x - st * cp * y + st * sp * z + center.x;
     M.y = st * x + ct * cp * y - ct * sp * z + center.y;
     M.z = sp * y + cp * z + center.z;
+    // M.x = cp * x - sp * y + st * z + center.x;
+    // M.y = sp * x + cp * y + center.y;
+    // M.z = ct * z - st * x + center.z;
   }
   const animate = () => {
     for (let i = 0; i < 8; ++i) {
