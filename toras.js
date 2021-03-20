@@ -21,10 +21,15 @@ const animate = () => {
   // precompute cosines and sines of A, B, theta, phi, same as before
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
-  for(var j=0;j<6.28;j+=0.3) { // j <=> theta
+  for(var j=0;j<6.28;j+=0.2) { // j <=> theta
       var ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta
-      ctx.fillStyle = 'rgba(255,255,255)';
-      ctx.fillRect(100+R2+R1*ct, 100+R1*st, 2.5, 2.5);
+      for(i=0;i<6.28;i+=0.4) {   // i <=> phi
+        var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
+        ctx.fillStyle = 'rgba(255,255,255)';
+        var x = R2+R1*ct
+        var y = R1*st
+        ctx.fillRect(200+x*cp, 100+y, 2.5, 2.5);
+      }
     //   for(i=0;i<6.28;i+=0.1) {   // i <=> phi
     //       var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
     //       var ox = R2 + R1*ct, // object x, y = (R2,0,0) + (R1 cos theta, R1 sin theta, 0)
