@@ -15,20 +15,20 @@ const animate = () => {
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   //if(tmr1 === undefined) { // only update A and B if the first animation isn't doing it already
-  A += 0.005;
-  B += 0.005;
+  A += 0.01;
+  B += 0.01;
   //}
   // precompute cosines and sines of A, B, theta, phi, same as before
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
-  for(var j=0;j<6.28;j+=0.2) { // j <=> theta
+  for(var j=0;j<6.28;j+=0.1) { // j <=> theta
       var ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta
-      for(i=0;i<6.28;i+=0.4) {   // i <=> phi
+      for(i=0;i<6.28;i+=0.1) {   // i <=> phi
         var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
         ctx.fillStyle = 'rgba(255,255,255)';
         var x = R2+R1*ct
         var y = R1*st
-        ctx.fillRect(200+x*cp, 100+y, 2.5, 2.5);
+        ctx.fillRect(250+x*cp, 250+(y*cA-x*sA*sp), 2.5, 2.5);
       }
     //   for(i=0;i<6.28;i+=0.1) {   // i <=> phi
     //       var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
