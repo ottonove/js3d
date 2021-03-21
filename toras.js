@@ -2,9 +2,21 @@ var canvastag = document.getElementById('canvas');
 
 var A=1, B=1;
 
+let mouseIsActive = false;
+
+canvastag.onmousedown = (event) => {
+  console.log('down');
+  mouseIsActive = true;
+}
+canvastag.onmouseup = (event) => {
+  console.log('up');
+  mouseIsActive = false;
+}
 canvastag.onmousemove = (event) => {
-  console.log('Y', event.movementY);
-  A += event.movementY*0.01;
+  if(mouseIsActive){
+    console.log('Y', event.movementY);
+    A += event.movementY*0.01;
+  }
 }
 
 // This is a reimplementation according to my math derivation on the page
