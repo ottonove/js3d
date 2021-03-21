@@ -1,24 +1,26 @@
-    var canvastag = document.getElementById('canvas');
+var canvastag = document.getElementById('canvas');
 
-    var A=1, B=1;
+var A=1, B=1;
 
-    // This is a reimplementation according to my math derivation on the page
-    var R1 = 50;
-    var R2 = 100;
-    var K1 = 200;//150;
-    var K2 = 5;
+canvastag.onmousemove = (event) => {
+  console.log('Y', event.movementY);
+  A += event.movementY*0.01;
+}
+
+// This is a reimplementation according to my math derivation on the page
+var R1 = 50;
+var R2 = 100;
+var K1 = 200;//150;
+var K2 = 5;
 
 const animate = () => {
-  //console.log("hello");
   var ctx = canvastag.getContext('2d');
   ctx.fillStyle='#000';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  //if(tmr1 === undefined) { // only update A and B if the first animation isn't doing it already
-  A += 0.01;
-  B += 0.01;
-  //}
-  // precompute cosines and sines of A, B, theta, phi, same as before
+  // A += 0.01;
+  // B += 0.01;
+
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
   for(var j=0;j<6.28;j+=0.1) { // j <=> theta
