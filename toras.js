@@ -39,7 +39,7 @@ canvastag.onmousemove = (event) => {
 // This is a reimplementation according to my math derivation on the page
 var R1 = 1;
 var R2 = 2;
-var K1 = 150;
+var K1 = 10;
 var K2 = 5;
 
 const animate = () => {
@@ -56,44 +56,44 @@ const animate = () => {
   for(var j=0;j<6.28;j+=0.1) { // j <=> theta
       var ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta
 
-      // for(i=0;i<6.28;i+=0.1) {   // i <=> phi
-      //   var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
-      //   ctx.fillStyle = 'rgba(255, 255, 255)';
+      for(i=0;i<6.28;i+=0.1) {   // i <=> phi
+        var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
+        ctx.fillStyle = 'rgba(255, 255, 255)';
 
-      //   // 下記のコードだと、外側が赤く、上から内側に入っていくにつれて、徐々に白に近づく。
-      //   // ctx.fillStyle = 'rgba(255,' + c + ',' + c + ')';
-      //   // c += 0.1;
+        // 下記のコードだと、外側が赤く、上から内側に入っていくにつれて、徐々に白に近づく。
+        // ctx.fillStyle = 'rgba(255,' + c + ',' + c + ')';
+        // c += 0.1;
 
-      //   var x = R2+R1*ct;
-      //   var y = R1*st;
-      //   var z = x*cA*sp+y*sA;
-      //   var wrap = y*cA-x*sA*sp;
-      //   ctx.fillRect(250+ x*cB*cp-sB*wrap, 250+ cB*wrap+x*sB*cp, 2.5, 2.5);
+        var x = R2+R1*ct;
+        var y = R1*st;
+        var z = x*cA*sp+y*sA;
+        var wrap = y*cA-x*sA*sp;
+        //ctx.fillRect(250+ x*cB*cp-sB*wrap, 250+ cB*wrap+x*sB*cp, 2.5, 2.5);
 
       //   // 下記のコードだと、面白い動きになる。
-      //   // ctx.fillRect(250+ ((x*cB*cp-sB*form)*K1/(K2+z)), 250+ ((cB*form+x*sB*cp)*K1/(K2+z)), 3, 3);
+        ctx.fillRect(250+ ((x*cB*cp-sB*wrap)*K1/(z)), 250+ ((cB*wrap+x*sB*cp)*K1/(z)), 3, 3);
 
       //   // 下記のコードだと、面白い動きになる。
       //   // ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA/* *sp */), 250+ cB*(y*cA-x*sA*sp)/* +x*sB*cp */, 2.5, 2.5);
-      // }
-
-      for(i=0;i<6.28;i+=0.1) {   // i <=> phi
-          var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
-          var ox = R2 + R1*ct, // object x, y = (R2,0,0) + (R1 cos theta, R1 sin theta, 0)
-              oy = R1*st;
-
-          var x = ox*(cB*cp + sA*sB*sp) - oy*cA*sB; // final 3D x coordinate
-          var y = ox*(sB*cp - sA*cB*sp) + oy*cA*cB; // final 3D y
-          var ooz = 1/(K2 + cA*ox*sp + sA*oy); // one over z
-          var xp=(150+K1*ooz*x); // x' = screen space coordinate, translated and scaled to fit our 320x240 canvas element
-          var yp=(120-K1*ooz*y); // y' (it's negative here because in our output, positive y goes down but in our 3D space, positive y goes up)
-          // luminance, scaled back to 0 to 1
-          var L=1.0*(cp*ct*sB - cA*ct*sp - sA*st + cB*(cA*st - ct*sA*sp));
-          if(L > 0) {
-          ctx.fillStyle = 'rgba(255,255,255,'+L+')';
-          ctx.fillRect(xp, yp, 2.5, 2.5);
-          }
       }
+
+      // for(i=0;i<6.28;i+=0.1) {   // i <=> phi
+      //     var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
+      //     var ox = R2 + R1*ct, // object x, y = (R2,0,0) + (R1 cos theta, R1 sin theta, 0)
+      //         oy = R1*st;
+
+      //     var x = ox*(cB*cp + sA*sB*sp) - oy*cA*sB; // final 3D x coordinate
+      //     var y = ox*(sB*cp - sA*cB*sp) + oy*cA*cB; // final 3D y
+      //     var ooz = 1/(K2 + cA*ox*sp + sA*oy); // one over z
+      //     var xp=(150+K1*ooz*x); // x' = screen space coordinate, translated and scaled to fit our 320x240 canvas element
+      //     var yp=(120-K1*ooz*y); // y' (it's negative here because in our output, positive y goes down but in our 3D space, positive y goes up)
+      //     // luminance, scaled back to 0 to 1
+      //     var L=1.0*(cp*ct*sB - cA*ct*sp - sA*st + cB*(cA*st - ct*sA*sp));
+      //     if(L > 0) {
+      //     ctx.fillStyle = 'rgba(255,255,255,'+L+')';
+      //     ctx.fillRect(xp, yp, 2.5, 2.5);
+      //     }
+      // }
 
     /**
      * 150 + K1 * ooz                       * x
