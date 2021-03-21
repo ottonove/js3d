@@ -66,6 +66,9 @@ const animate = () => {
         var x = R2+R1*ct
         var y = R1*st
         ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA*sp), 250+ cB*(y*cA-x*sA*sp)+x*sB*cp, 2.5, 2.5);
+
+        // 下記のコードだと、面白い動きになる。
+        // ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA/* *sp */), 250+ cB*(y*cA-x*sA*sp)/* +x*sB*cp */, 2.5, 2.5);
       }
     //   for(i=0;i<6.28;i+=0.1) {   // i <=> phi
     //       var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
