@@ -39,7 +39,7 @@ canvastag.onmousemove = (event) => {
 // This is a reimplementation according to my math derivation on the page
 var R1 = 50;
 var R2 = 100;
-var K1 = 200;//150;
+var K1 = 20;//150;
 var K2 = 5;
 
 const animate = () => {
@@ -63,9 +63,11 @@ const animate = () => {
         // ctx.fillStyle = 'rgba(255,' + c + ',' + c + ')';
         // c += 0.1;
 
-        var x = R2+R1*ct
-        var y = R1*st
-        ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA*sp), 250+ cB*(y*cA-x*sA*sp)+x*sB*cp, 2.5, 2.5);
+        var x = R2+R1*ct;
+        var y = R1*st;
+        var z = y;
+        var form = y*cA-x*sA*sp;
+        ctx.fillRect(250+ (x*cB*cp-sB*form)*z/K1, 250+ (cB*form+x*sB*cp)*z/K1, 3, 3);
 
         // 下記のコードだと、面白い動きになる。
         // ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA/* *sp */), 250+ cB*(y*cA-x*sA*sp)/* +x*sB*cp */, 2.5, 2.5);
@@ -87,6 +89,12 @@ const animate = () => {
     //       ctx.fillRect(xp, yp, 2.5, 2.5);
     //       }
     //   }
+
+    /**
+     * 150 + K1 * ooz                       * x
+     * 150 + K1 * 1/(K2 + cA*ox*sp + sA*oy) * x
+     * 150 + K1 * 1/(K2 + cA*ox*sp + sA*oy) * ox*(cB*cp + sA*sB*sp) - oy*cA*sB;
+     */
   }
   window.requestAnimationFrame(animate);
 }
