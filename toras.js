@@ -15,22 +15,24 @@
 
 var canvastag = document.getElementById('canvas');
 
-var A=1, B=1;
+var A=1.00, B=0.00;
 
 let mouseIsActive = false;
 
 canvastag.onmousedown = (event) => {
-  console.log('down');
+  // console.log('down');
   mouseIsActive = true;
 }
 canvastag.onmouseup = (event) => {
-  console.log('up');
+  // console.log('up');
   mouseIsActive = false;
 }
 canvastag.onmousemove = (event) => {
   if(mouseIsActive){
+    console.log('X', event.movementX);
     console.log('Y', event.movementY);
     A += event.movementY*0.01;
+    B += event.movementX*0.01;
   }
 }
 
@@ -46,7 +48,7 @@ const animate = () => {
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // A += 0.01;
-  B += 0.01;
+  // B += 0.01;
 
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
@@ -57,7 +59,7 @@ const animate = () => {
         ctx.fillStyle = 'rgba(255,255,255)';
         var x = R2+R1*ct
         var y = R1*st
-        ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA*sp), 250+(cB*(y*cA-x*sA*sp)), 2.5, 2.5);
+        ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA*sp), 250+ cB*(y*cA-x*sA*sp)+x*sB*cp, 2.5, 2.5);
       }
     //   for(i=0;i<6.28;i+=0.1) {   // i <=> phi
     //       var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
