@@ -39,8 +39,8 @@ canvastag.onmousemove = (event) => {
 // This is a reimplementation according to my math derivation on the page
 var R1 = 50;
 var R2 = 100;
-var K1 = 20;//150;
-var K2 = 5;
+var K1 = 50;
+var K2 = 10;
 
 const animate = () => {
   var ctx = canvastag.getContext('2d');
@@ -65,9 +65,9 @@ const animate = () => {
 
         var x = R2+R1*ct;
         var y = R1*st;
-        var z = y;
+        var z = x*cA*sp+y*sA;
         var form = y*cA-x*sA*sp;
-        ctx.fillRect(250+ (x*cB*cp-sB*form)*z/K1, 250+ (cB*form+x*sB*cp)*z/K1, 3, 3);
+        ctx.fillRect(250+ ((x*cB*cp-sB*form)*K1/(K2+z)), 250+ ((cB*form+x*sB*cp)*K1/(K2+z)), 3, 3);
 
         // 下記のコードだと、面白い動きになる。
         // ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA/* *sp */), 250+ cB*(y*cA-x*sA*sp)/* +x*sB*cp */, 2.5, 2.5);
