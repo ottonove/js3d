@@ -1,3 +1,18 @@
+/**
+ * y軸を中心に円を回し、トーラスを作成。
+ * そのトーラスを、x軸を中心に回す。
+ * {x, y, 0} . {{cosφ, 0, sinφ}, {0, 1, 0}, {-sinφ, 0, cosφ}} . {{1,0, 0}, {0, cosA, sinA}, {0, -sinA, cosA}}
+ * 
+ * [Donut math: how donut.c works – a1k0n.net](https://www.a1k0n.net/2011/07/20/donut-math.html)
+ *   x -> R2 + R1 * cos(theta),  y -> R1 * sin(theta)
+ * 
+ * [Wolfram|Alpha](https://ja.wolframalpha.com/input/?i=%7Bx%2C+y%2C+0%7D+.+%7B%7Bcos%CF%86%2C+0%2C+sin%CF%86%7D%2C+%7B0%2C+1%2C+0%7D%2C+%7B-sin%CF%86%2C+0%2C+cos%CF%86%7D%7D+.+%7B%7B1%2C0%2C+0%7D%2C+%7B0%2C+cosA%2C+sinA%7D%2C+%7B0%2C+-sinA%2C+cosA%7D%7D)
+ */
+
+/**
+ * {x, y, 0} . {{cosφ, 0, sinφ}, {0, 1, 0}, {-sinφ, 0, cosφ}} . {{1,0, 0}, {0, cosA, sinA}, {0, -sinA, cosA}} . {{cosB, sinB, 0}, {-sinB, cosB, 0}, {0, 0, 1}}
+ */
+
 var canvastag = document.getElementById('canvas');
 
 var A=1, B=1;
@@ -31,7 +46,7 @@ const animate = () => {
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // A += 0.01;
-  // B += 0.01;
+  B += 0.01;
 
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
