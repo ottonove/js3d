@@ -13,93 +13,86 @@
  * {x, y, 0} . {{cosφ, 0, sinφ}, {0, 1, 0}, {-sinφ, 0, cosφ}} . {{1,0, 0}, {0, cosA, sinA}, {0, -sinA, cosA}} . {{cosB, sinB, 0}, {-sinB, cosB, 0}, {0, 0, 1}}
  */
 
-var canvastag = document.getElementById('canvas');
+// const canvastag = document.createElement('canvas');
+// canvastag.width = window.innerWidth-16;
+// canvastag.height = window.innerHeight;
+// document.body.appendChild(canvastag);
+ 
+const canvastag = document.getElementById('canvas');
 
-var A=1.00, B=0.00;
+const R1 = 1;
+const R2 = 2;
+const K1 = 150;
+const K2 = 4;
+
+let A = 1.00;
+let B = 0.00;
 
 let mouseIsActive = false;
 
 canvastag.onmousedown = (event) => {
-  // console.log('down');
   mouseIsActive = true;
 }
 canvastag.onmouseup = (event) => {
-  // console.log('up');
   mouseIsActive = false;
 }
 canvastag.onmousemove = (event) => {
   if(mouseIsActive){
-    console.log('X', event.movementX);
-    console.log('Y', event.movementY);
     A += event.movementY*0.01;
     B += event.movementX*0.01;
   }
 }
 
-// This is a reimplementation according to my math derivation on the page
-var R1 = 1;
-var R2 = 2;
-var K1 = 150;
-var K2 = 4;
+let clientX = 0;
+let clientY = 0;
+
+canvastag.addEventListener('touchstart', (evt) => {
+  // console.log('touch start', evt);
+  clientX = evt.targetTouches[0].clientX;
+  clientY = evt.targetTouches[0].clientY;
+});
+canvastag.addEventListener('touchmove', (evt) => {
+  const valX = (clientX - evt.changedTouches[0].clientX) * 0.001;
+  const valY = (clientY - evt.changedTouches[0].clientY) * 0.001;
+  console.log('touch move X:', valX);
+  console.log('touch move Y:', valY);
+  B += valX;
+  A += valY;
+});
+canvastag.addEventListener('touchend', (evt) => {
+  // console.log('touched', evt);
+  clientX = 0;
+  clientY = 0;
+});
 
 const animate = () => {
-  var ctx = canvastag.getContext('2d');
+  const ctx = canvastag.getContext('2d');
   ctx.fillStyle='#000';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  // A += 0.01;
-  // B += 0.01;
+  const cA = Math.cos(A);
+  const sA = Math.sin(A);
+  const cB = Math.cos(B);
+  const sB = Math.sin(B);
 
-  let c = 0;
-  var cA=Math.cos(A), sA=Math.sin(A),
-      cB=Math.cos(B), sB=Math.sin(B);
-  for(var j=0;j<6.28;j+=0.1) { // j <=> theta
-      var ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta
+  for(j=0;j<6.28;j+=0.1) { // theta
+      const ct=Math.cos(j), st=Math.sin(j);
 
-      for(i=0;i<6.28;i+=0.1) {   // i <=> phi
-        var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
+      for(i=0;i<6.28;i+=0.1) { // phi
+        const sp = Math.sin(i);
+        const cp = Math.cos(i);
+        const x = R2+R1*ct;
+        const y = R1*st;
+        const z = x*cA*sp+y*sA;
+        const wrap = y*cA-x*sA*sp;
+        
         ctx.fillStyle = 'rgba(255, 255, 255)';
-
-        // 下記のコードだと、外側が赤く、上から内側に入っていくにつれて、徐々に白に近づく。
-        // ctx.fillStyle = 'rgba(255,' + c + ',' + c + ')';
-        // c += 0.1;
-
-        var x = R2+R1*ct;
-        var y = R1*st;
-        var z = x*cA*sp+y*sA;
-        var wrap = y*cA-x*sA*sp;
-        //ctx.fillRect(250+ x*cB*cp-sB*wrap, 250+ cB*wrap+x*sB*cp, 2.5, 2.5);
-
-      //   // 下記のコードだと、面白い動きになる。
-        ctx.fillRect(250+ ((x*cB*cp-sB*wrap)*K1/(K2+z)), 250+ ((cB*wrap+x*sB*cp)*K1/(K2+z)), 3, 3);
-
-      //   // 下記のコードだと、面白い動きになる。
-      //   // ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA/* *sp */), 250+ cB*(y*cA-x*sA*sp)/* +x*sB*cp */, 2.5, 2.5);
+        ctx.fillRect(
+          (canvastag.width/2) + ((x*cB*cp-sB*wrap)*K1/(K2+z)),
+          (canvastag.height/2) + ((cB*wrap+x*sB*cp)*K1/(K2+z)),
+          3,3
+        );
       }
-
-      // for(i=0;i<6.28;i+=0.1) {   // i <=> phi
-      //     var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
-      //     var ox = R2 + R1*ct, // object x, y = (R2,0,0) + (R1 cos theta, R1 sin theta, 0)
-      //         oy = R1*st;
-
-      //     var x = ox*(cB*cp + sA*sB*sp) - oy*cA*sB; // final 3D x coordinate
-      //     var y = ox*(sB*cp - sA*cB*sp) + oy*cA*cB; // final 3D y
-      //     var ooz = 1/(K2 + cA*ox*sp + sA*oy); // one over z
-      //     var xp=(150+K1*ooz*x); // x' = screen space coordinate, translated and scaled to fit our 320x240 canvas element
-      //     var yp=(120-K1*ooz*y); // y' (it's negative here because in our output, positive y goes down but in our 3D space, positive y goes up)
-      //     // luminance, scaled back to 0 to 1
-      //     var L=1.0*(cp*ct*sB - cA*ct*sp - sA*st + cB*(cA*st - ct*sA*sp));
-      //     if(L > 0) {
-      //     ctx.fillStyle = 'rgba(255,255,255,'+L+')';
-      //     ctx.fillRect(xp, yp, 2.5, 2.5);
-      //     }
-      // }
-
-    /**
-     * 150 + K1 * ooz                       * x
-     * 150 + K1 * 1/(K2 + cA*ox*sp + sA*oy) * x
-     * 150 + K1 * 1/(K2 + cA*ox*sp + sA*oy) * ox*(cB*cp + sA*sB*sp) - oy*cA*sB;
-     */
   }
   window.requestAnimationFrame(animate);
 }
