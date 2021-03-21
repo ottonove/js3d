@@ -50,13 +50,19 @@ const animate = () => {
   // A += 0.01;
   // B += 0.01;
 
+  let c = 0;
   var cA=Math.cos(A), sA=Math.sin(A),
       cB=Math.cos(B), sB=Math.sin(B);
   for(var j=0;j<6.28;j+=0.1) { // j <=> theta
       var ct=Math.cos(j),st=Math.sin(j); // cosine theta, sine theta
       for(i=0;i<6.28;i+=0.1) {   // i <=> phi
         var sp=Math.sin(i),cp=Math.cos(i); // cosine phi, sine phi
-        ctx.fillStyle = 'rgba(255,255,255)';
+        ctx.fillStyle = 'rgba(255, 255, 255)';
+
+        // 下記のコードだと、外側が赤く、上から内側に入っていくにつれて、徐々に白に近づく。
+        // ctx.fillStyle = 'rgba(255,' + c + ',' + c + ')';
+        // c += 0.1;
+
         var x = R2+R1*ct
         var y = R1*st
         ctx.fillRect(250+ x*cB*cp-sB*(y*cA-x*sA*sp), 250+ cB*(y*cA-x*sA*sp)+x*sB*cp, 2.5, 2.5);
