@@ -20,8 +20,8 @@
  
 const canvastag = document.getElementById('canvas');
 
-const R1 = 25;
-const R2 = 50;
+const R1 = 1;
+const R2 = 2;
 const K1 = 150;
 const K2 = 4;
 
@@ -88,8 +88,8 @@ const animate = () => {
         
         ctx.fillStyle = 'rgba(255, 255, 255)';
         ctx.fillRect(
-          (canvastag.width/2) + ((x*cB*cp-sB*wrap)*z),
-          (canvastag.height/2) + ((cB*wrap+x*sB*cp)*z),
+          (canvastag.width/2) + ((x*cB*cp-sB*wrap)*K1/(K2+z)),
+          (canvastag.height/2) + ((cB*wrap+x*sB*cp)*K1/(K2+z)),
           3,3
         );
       }
