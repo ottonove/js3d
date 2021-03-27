@@ -88,13 +88,12 @@ const animate = () => {
         
         ctx.fillStyle = 'rgba(255, 255, 255)';
         ctx.fillRect(
-          (canvastag.width/2) + ((x*cB*cp-sB*wrap)*K1*Math.abs(z)),
-          (canvastag.height/2) + ((cB*wrap+x*sB*cp)*K1*Math.abs(z)),
+          (canvastag.width/2) + /* - */ ((x*cB*cp-sB*wrap)*K1/(/* - */K2 + /* - */z)),
+          (canvastag.height/2) + ((cB*wrap+x*sB*cp)*K1/(K2+z)),
           3,3
         );
       }
   }
-  A += 0.01;
   window.requestAnimationFrame(animate);
 }
 animate();
